@@ -1,3 +1,4 @@
+
 package controladores;
 
 import jakarta.servlet.RequestDispatcher;
@@ -18,7 +19,8 @@ public class EfetuarRegistro extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
+    	RequestDispatcher dispatcher = request.getRequestDispatcher("./WEB-INF/jsp/registro.jsp");
+        dispatcher.forward(request, response);
     }
 
     @Override
@@ -33,7 +35,7 @@ public class EfetuarRegistro extends HttpServlet {
         if (usuarioExistente != null) {
             // Redireciona para uma página indicando que o e-mail já está cadastrado
             request.setAttribute("mensagemErro", "E-mail já cadastrado.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("./WEB-INF/jsp/registro.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("./WEB-INF/jsp/erroRegistro.jsp");
             dispatcher.forward(request, response);
         } else {
             // Cria e registra o novo usuário
