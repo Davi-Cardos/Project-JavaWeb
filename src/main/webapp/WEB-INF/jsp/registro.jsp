@@ -7,6 +7,7 @@
 <title> Autentique-se </title>
 </head>
 <body>
+<h1>Registro</h1>
 	<form action="EfetuarRegistro" method="post">
     <label for="email">E-mail:</label>
     <input type="email" name="email" id="email" required>

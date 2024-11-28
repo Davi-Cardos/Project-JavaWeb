@@ -7,7 +7,8 @@
 <title>Pedido de Estagio</title>
 </head>
 <body>
-	<form action="FormPedidoEstagio" method="post">>
+<h1>Dados do Est&aacute;gio</h1>
+	<form action="FormPedidoEstagio" method="post">
     	<label for="nomeEmp">Nome da Empresa:</label>
     	<input type="text" id="nomeEmp" name="nomeEmp" required>
     	<br>
