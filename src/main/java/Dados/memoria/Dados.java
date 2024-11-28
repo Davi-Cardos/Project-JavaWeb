@@ -34,24 +34,22 @@ public class Dados {
     }
 
     public static Usuario buscarUsuario(String email, String senha) {
-        // Busca usuário por email e senha
-        Optional<Usuario> usuario = usuarios.stream()
-                .filter(u -> u.getEmail().equals(email) && u.getSenha().equals(senha))
-                .findFirst();
-
-        if (usuario.isPresent()) {
-            System.out.println("Usuário encontrado: " + usuario.get());
-            return usuario.get();
-        } else {
-            System.out.println("Usuário não encontrado.");
-            return null;
-        }
-    }
+    	 // Busca usuário por email e senha
+    	  return usuarios.stream()
+    	            .filter(u -> u != null && email.equals(u.getEmail()) && senha.equals(u.getSenha()))
+    	            .findFirst()
+    	            .orElse(null);
+    	}
     
     public static void adicionarUsuario(Usuario usuario) {
-        usuarios.add(usuario);
-        System.out.println("Novo usuário adicionado: " + usuario);
+        if (usuario != null && usuario.getEmail() != null && usuario.getSenha() != null) {
+            usuarios.add(usuario);
+            System.out.println("Novo usuário adicionado: " + usuario);
+        } else {
+            System.out.println("Erro: Tentativa de adicionar um usuário inválido.");
+        }
     }
+
 
     public static void criarPedidoIntencaoEstagio(Boolean primeiroEst, String nomeEmpresa, String enderecoEmpresa,
                                                   String modalidadeEstagio, int maxCargaHoraria, double valorBolsa,

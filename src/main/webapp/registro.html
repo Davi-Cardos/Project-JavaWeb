@@ -5,9 +5,15 @@
 <title> Autentique-se </title>
 </head>
 <body>
-	<form action= "./EfetuarRegistro" method = "get">
-	<p> Digite o seu email: <input type="email" name="Registro"> </p>
-	<p> Digite a sua senha: <input type="password" name="senha"> </p>
+	<form action="EfetuarRegistro" method="post">
+    <label for="email">E-mail:</label>
+    <input type="email" name="email" id="email" required>
+    <br>
+    <label for="senha">Senha:</label>
+    <input type="password" name="senha" id="senha" required>
+    <br>
+    <input type="submit" value="Registrar">
+</form>
 	
-	<input type="submit" value="Registrar">
+	
 	
