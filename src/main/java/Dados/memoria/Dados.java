@@ -51,16 +51,28 @@ public class Dados {
     }
 
 
-    public static void criarPedidoIntencaoEstagio(Boolean primeiroEst, String nomeEmpresa, String enderecoEmpresa,
-                                                  String modalidadeEstagio, int maxCargaHoraria, double valorBolsa,
-                                                  String resumo, String motivoEstagio, String conteudos) {
-        // Cria e adiciona um novo pedido de intenção de estágio
-        PedidoIntencaoEstagio novoPedido = new PedidoIntencaoEstagio(primeiroEst, nomeEmpresa, enderecoEmpresa,
-                modalidadeEstagio, maxCargaHoraria, valorBolsa, resumo, motivoEstagio, conteudos);
+    public static void criarPedidoIntencaoEstagio(
+    	    boolean primeiroEst, String nomeEmp, String enderecoEmp, String modalidadeEst, 
+    	    int maxCargaHoraria, double valorBolsa, String resumo, String conteudos, String motivoEst) {
+    	    
+    	    PedidoIntencaoEstagio novoPedido = new PedidoIntencaoEstagio(
+    	        primeiroEst, nomeEmp, enderecoEmp, modalidadeEst, maxCargaHoraria, 
+    	        valorBolsa, resumo, conteudos, motivoEst
+    	    );
+    	    
+    	    pedidosIntencaoEstagio.add(novoPedido); 
+    	    System.out.println("Pedido de intenção criado com sucesso: " + novoPedido);
+    	}
 
-        pedidosIntencaoEstagio.add(novoPedido);
-        System.out.println("Pedido de intenção de estágio criado: " + novoPedido);
+    
+    public static boolean validarIRA(float ira) {
+        return ira >= 6.0; 
     }
+
+    public static boolean validarCargaHoraria(int cargaHoraria) {
+        return cargaHoraria <= 30; 
+    }
+
 
     public static void main(String[] args) {
         // Testes
