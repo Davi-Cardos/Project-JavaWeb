@@ -72,6 +72,11 @@ public class Dados {
     public static boolean validarCargaHoraria(int cargaHoraria) {
         return cargaHoraria <= 30; 
     }
+    
+    public static boolean validarCargaHorariaMin(int cargaHoraria) {
+        return cargaHoraria >= 80; 
+    }
+    
 
 
     public static void main(String[] args) {

@@ -21,25 +21,16 @@ public class CriarPedidoIntencao extends HttpServlet {
         // Obtendo parâmetros do formulário
         float ira = Float.parseFloat(request.getParameter("ira"));
         int cargaHoraria = Integer.parseInt(request.getParameter("cargaHoraria"));
-        String nomeEmp = request.getParameter("nomeEmp");
-        String enderecoEmp = request.getParameter("enderecoEmp");
-        String modalidadeEst = request.getParameter("modalidadeEst");
-        int maxCargaHoraria = Integer.parseInt(request.getParameter("maxCargaHoraria"));
-        double valorBolsa = Double.parseDouble(request.getParameter("valorBolsa"));
-        String resumo = request.getParameter("resumo");
-        String conteudos = request.getParameter("conteudos");
-        String motivoEst = request.getParameter("motivoEst");
+        
 
         // Validação de elegibilidade
         boolean iraValido = Dados.validarIRA(ira);
-        boolean cargaHorariaValida = iraValido && Dados.validarCargaHoraria(cargaHoraria);
+        boolean cargaHorariaValida = iraValido && Dados.validarCargaHorariaMin(cargaHoraria);
 
         if (iraValido && cargaHorariaValida) {
-            Dados.criarPedidoIntencaoEstagio(
-                true, nomeEmp, enderecoEmp, modalidadeEst, maxCargaHoraria, 
-                valorBolsa, resumo, conteudos, motivoEst
-            );
-            request.setAttribute("mensagemSucesso", "Pedido de intenção de estágio criado com sucesso!");
+        	request.setAttribute("mensagemSucesso", "IRA e Carga Horaria Validas");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("./WEB-INF/jsp/welcome_two.jsp");
+            dispatcher.forward(request, response);
         } else {
             request.setAttribute("mensagemErro", "Não foi possível criar o pedido. Verifique IRA ou carga horária.");
         }
