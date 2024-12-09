@@ -6,6 +6,46 @@ import Entidades.ResultSet.copy.Linha;
 import Entidades.ResultSet.copy.ResultSet;
 
 public class IntencaoEstagioMTE {
+	
+	private boolean primeiroEstagio;
+    private String nomeEmpresa;
+    private String enderecoEmpresa;
+    private String modalidadeEstagio;
+    private int maxCargaHoraria;
+    private double valorBolsa;
+    private String resumo;
+    private String conteudos;
+    private String motivoEstagio;
+
+    public IntencaoEstagioMTE(boolean primeiroEstagio, String nomeEmpresa, String enderecoEmpresa, 
+                                 String modalidadeEstagio, int maxCargaHoraria, double valorBolsa, 
+                                 String resumo, String conteudos, String motivoEstagio) {
+        this.primeiroEstagio = primeiroEstagio;
+        this.nomeEmpresa = nomeEmpresa;
+        this.enderecoEmpresa = enderecoEmpresa;
+        this.modalidadeEstagio = modalidadeEstagio;
+        this.maxCargaHoraria = maxCargaHoraria;
+        this.valorBolsa = valorBolsa;
+        this.resumo = resumo;
+        this.conteudos = conteudos;
+        this.motivoEstagio = motivoEstagio;
+    }
+    
+    @Override
+    public String toString() {
+        return "IntencaoEstagioMTE {" +
+               "primeiroEstagio=" + primeiroEstagio +
+               ", nomeEmpresa='" + nomeEmpresa + '\'' +
+               ", enderecoEmpresa='" + enderecoEmpresa + '\'' +
+               ", modalidadeEstagio='" + modalidadeEstagio + '\'' +
+               ", maxCargaHoraria=" + maxCargaHoraria +
+               ", valorBolsa=" + valorBolsa +
+               ", resumo='" + resumo + '\'' +
+               ", conteudos='" + conteudos + '\'' +
+               ", motivoEstagio='" + motivoEstagio + '\'' +
+               '}';
+    }
+    
 	 public static boolean validarIra(ResultSet rs, String nomeTabela, int idAluno) {
 	        Linha linha = buscarLinhaPorId(rs, nomeTabela, idAluno);
 	        if (linha != null) {
