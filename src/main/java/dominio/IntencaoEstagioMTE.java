@@ -2,12 +2,13 @@ package dominio;
 
 import java.util.Iterator;
 
+import Dados.memoria.Dados;
 import Entidades.ResultSet.copy.Linha;
 import Entidades.ResultSet.copy.ResultSet;
 
 public class IntencaoEstagioMTE {
-	
-	private boolean primeiroEstagio;
+
+    private boolean primeiroEstagio;
     private String nomeEmpresa;
     private String enderecoEmpresa;
     private String modalidadeEstagio;
@@ -30,7 +31,7 @@ public class IntencaoEstagioMTE {
         this.conteudos = conteudos;
         this.motivoEstagio = motivoEstagio;
     }
-    
+
     @Override
     public String toString() {
         return "IntencaoEstagioMTE {" +
@@ -45,42 +46,42 @@ public class IntencaoEstagioMTE {
                ", motivoEstagio='" + motivoEstagio + '\'' +
                '}';
     }
-    
-	 public static boolean validarIra(ResultSet rs, String nomeTabela, int idAluno) {
-	        Linha linha = buscarLinhaPorId(rs, nomeTabela, idAluno);
-	        if (linha != null) {
-	            int ira = (int) linha.getValor("ira");
-	            return ira >= 6;
-	        }
-	        return false;
-	    }
 
-	    public static boolean validarCargaHoraria(ResultSet rs, String nomeTabela, int idAluno) {
-	        Linha linha = buscarLinhaPorId(rs, nomeTabela, idAluno);
-	        if (linha != null) {
-	            int cargaHoraria = (int) linha.getValor("cargaHoraria");
-	            return cargaHoraria >= 80;
-	        }
-	        return false;
-	    }
+    public static boolean validarIra(ResultSet rs, int idAluno) {
+        Linha linha = buscarLinhaPorId(rs, idAluno);
+        if (linha != null) {
+            int ira = (int) linha.getValor("ira");
+            return ira >= 6;
+        }
+        return false;
+    }
 
-	    private static Linha buscarLinhaPorId(ResultSet rs, String nomeTabela, int idAluno) {
-	        Iterator<Linha> iterator = rs.getLinha(nomeTabela);
-	        while (iterator.hasNext()) {
-	            Linha linha = iterator.next();
-	            if ((int) linha.getValor("id") == idAluno) {
-	                return linha;
-	            }
-	        }
-	        return null;
-	    }
+    public static boolean validarCargaHoraria(ResultSet rs, int idAluno) {
+        Linha linha = buscarLinhaPorId(rs, idAluno);
+        if (linha != null) {
+            int cargaHoraria = (int) linha.getValor("cargaHoraria");
+            return cargaHoraria >= 80;
+        }
+        return false;
+    }
 
-	    public static void criarPedidoIntencaoEstagio(ResultSet rs, boolean primeiroEstagio, String nomeEmpresa, String enderecoEmpresa, 
-	                                                  String modalidadeEst, int maxCargaHoraria, double valorBolsa, 
-	                                                  String resumo, String conteudos, String motivoEstagio) {
-	        if (maxCargaHoraria <= 30) {
-	            Dados.inserir(primeiroEstagio, nomeEmpresa, enderecoEmpresa, modalidadeEst, maxCargaHoraria, 
-	                          valorBolsa, resumo, conteudos, motivoEstagio);
-	        }
-	    }
-	} 
+    private static Linha buscarLinhaPorId(ResultSet rs, int idAluno) {
+        Iterator<Linha> iterator = rs.getLinha("IntecaoEstagio");
+        while (iterator.hasNext()) {
+            Linha linha = iterator.next();
+            if ((int) linha.getValor("id") == idAluno) {
+                return linha;
+            }
+        }
+        return null;
+    }
+
+    public static void criarPedidoIntencaoEstagio(ResultSet rs, boolean primeiroEstagio, String nomeEmpresa, String enderecoEmpresa, 
+                                                  String modalidadeEst, int maxCargaHoraria, double valorBolsa, 
+                                                  String resumo, String conteudos, String motivoEstagio) {
+        if (maxCargaHoraria <= 30) {
+            Dados.inserir(primeiroEstagio, nomeEmpresa, enderecoEmpresa, modalidadeEst, maxCargaHoraria, 
+                          valorBolsa, resumo, conteudos, motivoEstagio);
+        }
+    }
+}
