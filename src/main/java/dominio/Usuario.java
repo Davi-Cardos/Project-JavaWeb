@@ -1,4 +1,4 @@
-package Dados.memoria;
+package dominio;
 
 public class Usuario {
     private String email;

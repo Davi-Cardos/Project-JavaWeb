@@ -9,44 +9,44 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.List;
 
 import Dados.memoria.Dados;
-import Dados.memoria.Usuario;
-import dominio.Usuarios;
-
+import Dados.memoria.DadosUsuario;
+import dominio.Usuario;
 /**
  * Servlet implementation class EfetuarLogin
  */
 @WebServlet("/EfetuarLogin")
 public class EfetuarLogin extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-    
-//	private Usuarios usuarioPadrao = new Usuarios("user", "1234");
-	
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./WEB-INF/jsp/login.jsp");
-        dispatcher.forward(request, response);
-	}
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		Usuarios usuarioInformado = new Usuarios(request.getParameter("email"), request.getParameter("senha"));
-		
-		HttpSession sessao = request.getSession();
-		
-		sessao.setAttribute("usuario", usuarioInformado);
-		
-Usuario rs = Dados.buscarUsuario(request.getParameter("email"), request.getParameter("senha"));
-	if (rs != null) {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("./VerificarLogin");
-			dispatcher.forward(request, response);
-	}
-	else {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("./WEB-INF/jsp/login.jsp");
-			dispatcher.forward(request, response);
-		
-		}
-	}
-}
+    private static final long serialVersionUID = 1L;
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String email = request.getParameter("email");
+        String senha = request.getParameter("senha");
+
+        try {
+            List<Usuario> usuarios = DadosUsuario.getUsuarios(); 
+            boolean autenticado = false;
+
+            for (Usuario usuario : usuarios) {
+                if (usuario.getEmail().equals(email) && usuario.getSenha().equals(senha)) {
+                    request.getSession().setAttribute("usuarioLogado", usuario);
+                    autenticado = true;
+                    break;
+                }
+            }
+
+            if (autenticado) {
+                response.sendRedirect("welcome.jsp");
+            } else {
+                request.setAttribute("mensagemErro", "E-mail ou senha inválidos.");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("mensagemErro", "Erro ao realizar login. Tente novamente.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
+    }
+}

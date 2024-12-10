@@ -1,52 +1,58 @@
-
 package controladores;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 
-import Dados.memoria.Dados;
-import Dados.memoria.Usuario;
+import Dados.memoria.DadosUsuario;
+import dominio.Usuario;
 
+/**
+ * Servlet implementation class EfetuarRegistro
+ */
 @WebServlet("/EfetuarRegistro")
 public class EfetuarRegistro extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
+       
+	 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	        String nome = request.getParameter("nome");
+	        String email = request.getParameter("email");
+	        String senha = request.getParameter("senha");
+	        String confirmarSenha = request.getParameter("confirmarSenha");
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	RequestDispatcher dispatcher = request.getRequestDispatcher("./WEB-INF/jsp/registro.jsp");
-        dispatcher.forward(request, response);
-    }
+	        try {
+	            // Validações básicas
+	            if (nome == null || nome.isEmpty() || email == null || email.isEmpty() || senha == null || senha.isEmpty()) {
+	                request.setAttribute("mensagemErro", "Todos os campos são obrigatórios.");
+	                request.getRequestDispatcher("registro.jsp").forward(request, response);
+	                return;
+	            }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Obtendo os parâmetros do formulário HTML
-        String email = request.getParameter("email");
-        String senha = request.getParameter("senha");
+	            if (!senha.equals(confirmarSenha)) {
+	                request.setAttribute("mensagemErro", "As senhas não coincidem.");
+	                request.getRequestDispatcher("registro.jsp").forward(request, response);
+	                return;
+	            }
 
-        // Verifica se o usuário já está cadastrado
-        Usuario usuarioExistente = Dados.buscarUsuario(email, senha);
+	            Usuario usuarioExistente = DadosUsuario.buscarUsuarioPorEmail(email);
+	            if (usuarioExistente != null) {
+	                request.setAttribute("mensagemErro", "Este e-mail já está cadastrado.");
+	                request.getRequestDispatcher("registro.jsp").forward(request, response);
+	                return;
+	            }
 
-        if (usuarioExistente != null) {
-            // Redireciona para uma página indicando que o e-mail já está cadastrado
-            request.setAttribute("mensagemErro", "E-mail já cadastrado.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("./WEB-INF/jsp/erroRegistro.jsp");
-            dispatcher.forward(request, response);
-        } else {
-            // Cria e registra o novo usuário
-            Usuario novoUsuario = new Usuario(email, senha, "Novo Usuário");
-            Dados.adicionarUsuario(novoUsuario);
+	            Usuario novoUsuario = new Usuario(email, senha, nome);
+	            DadosUsuario.adicionarUsuario(novoUsuario);
 
-            // Redireciona para uma página de sucesso ou login
-            request.setAttribute("mensagemSucesso", "Usuário registrado com sucesso!");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("./WEB-INF/jsp/login.jsp");
-            dispatcher.forward(request, response);
-        }
-    }
-}
-
+	            request.setAttribute("mensagemSucesso", "Registro realizado com sucesso! Faça login.");
+	            request.getRequestDispatcher("login.jsp").forward(request, response);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            request.setAttribute("mensagemErro", "Erro ao realizar o registro. Tente novamente.");
+	            request.getRequestDispatcher("registro.jsp").forward(request, response);
+	        }
+	    }
+	}

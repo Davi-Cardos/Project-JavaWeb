@@ -65,7 +65,7 @@ public class IntencaoEstagioMTE {
         return false;
     }
 
-    private static Linha buscarLinhaPorId(ResultSet rs, int idAluno) {
+    public static Linha buscarLinhaPorId(ResultSet rs, int idAluno) {
         Iterator<Linha> iterator = rs.getLinha("IntecaoEstagio");
         while (iterator.hasNext()) {
             Linha linha = iterator.next();
