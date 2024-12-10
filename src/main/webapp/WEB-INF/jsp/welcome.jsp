@@ -10,7 +10,7 @@
     <p>Escolha uma opcao:</p>
     <ul>
         <li>
-        <a href="RegistroIntencaoEstagio"> PedidoEstagio </a>
+        <a href="RegistrarIntencaoEstagio"> PedidoEstagio </a>
         </li>
         <li><a href="logout">Sair</a></li>
     </ul>
