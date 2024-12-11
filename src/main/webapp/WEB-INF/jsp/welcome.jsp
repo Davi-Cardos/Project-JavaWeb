@@ -8,11 +8,15 @@
 <body>
     <h1>Bem-vindo!</h1>
     <p>Escolha uma opcao:</p>
-    <ul>
-        <li>
-        <a href="RegistrarIntencaoEstagio"> PedidoEstagio </a>
-        </li>
-        <li><a href="logout">Sair</a></li>
-    </ul>
-</body>
+    <form action="CriarPedidoIntencao" method="post">
+    <label for="id"> ID: </label>
+    <input type="number" id = "id" name="id" step="0.01" required>
+    <label for="ira">IRA:</label>
+    <input type="number" id="ira" name="ira" step="0.01" required>
+    <br>
+    <label for="cargaHoraria">Carga Horaria:</label>
+    <label for="cargaHoraria">Carga Horaria :</label>
+    <input type="number" id="cargaHoraria" name="cargaHoraria" required>
+    <br>
+    <button type="submit">Verificar</button>
 </html>

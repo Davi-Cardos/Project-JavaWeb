@@ -23,7 +23,6 @@ public class RegistrarIntencaoEstagio extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int idAluno = Integer.parseInt(request.getParameter("idAluno"));
         boolean primeiroEstagio = Boolean.parseBoolean(request.getParameter("primeiroEstagio"));
@@ -61,10 +60,10 @@ public class RegistrarIntencaoEstagio extends HttpServlet {
         }
     }
 	
-	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    RequestDispatcher dispatcher = request.getRequestDispatcher("./WEB-INF/jsp/pedidoEstagio.jsp");
-	    dispatcher.forward(request, response);
+		doPost(request, response);
+	    /*RequestDispatcher dispatcher = request.getRequestDispatcher("./WEB-INF/jsp/pedidoEstagio.jsp");
+	    dispatcher.forward(request, response);*/
 	}
 
 }
